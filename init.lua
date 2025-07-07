@@ -4,14 +4,9 @@ vim.opt.smartcase = true           -- 智能大小写匹配
 vim.opt.hlsearch = true            -- 高亮搜索
 vim.opt.incsearch = true           -- 增量搜索
 vim.opt.wrapscan = false           -- 不循环搜索
-vim.opt.autoindent = true          -- 自动缩进
 vim.opt.smartindent = true         -- 智能缩进
 vim.opt.splitbelow = true          -- 水平分割窗口在下方
-vim.opt.laststatus = 2             -- 显示状态栏
 
--- 文件类型和语法高亮
-vim.cmd('filetype on')
-vim.cmd('syntax on')
 
 -- 键位映射
 vim.keymap.set('i', 'jk', '<ESC>', {desc = '退出插入模式'})
