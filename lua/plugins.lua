@@ -54,10 +54,23 @@ local vim_markdown = {
   end
 }
 
+-- 表格模式插件
+local table_mode = {
+  'dhruvasagar/vim-table-mode',
+  ft = 'markdown',
+  config = function()
+    -- 设置表格分隔符
+    vim.g.table_mode_corner = '|'
+    -- 启用表格模式快捷键
+    vim.g.table_mode_map_prefix = '<Leader>t'
+  end
+}
+
 return {
   tagbar,
   nerdtree,
   auto_pairs,
   drawit,
-  vim_markdown
+  vim_markdown,
+  table_mode
 }
