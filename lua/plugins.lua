@@ -44,9 +44,20 @@ local drawit = {
   'vim-scripts/DrawIt'
 }
 
+-- Markdown 语法高亮和功能增强
+local vim_markdown = {
+  'preservim/vim-markdown',
+  ft = 'markdown',
+  config = function()
+    -- 禁用折叠功能
+    vim.g.vim_markdown_folding_disabled = 1
+  end
+}
+
 return {
   tagbar,
   nerdtree,
   auto_pairs,
-  drawit
+  drawit,
+  vim_markdown
 }
