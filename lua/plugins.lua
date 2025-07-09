@@ -14,5 +14,18 @@ return {
       -- 在左侧显示
       vim.g.tagbar_position = 'topleft vertical'
     end
+  },
+
+  -- NERDTree 文件浏览器
+  {
+    'preservim/nerdtree',
+    keys = {
+      { '<F9>', '<cmd>NERDTreeToggle<cr>', desc = '切换文件浏览器' }
+    },
+    config = function()
+      -- NERDTree 配置
+      vim.g.NERDTreeWinPos = 'right'
+      vim.g.NERDTreeShowBookmarks = 1
+    end
   }
 }
