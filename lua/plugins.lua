@@ -28,5 +28,14 @@ return {
       vim.g.NERDTreeWinPos = 'right'
       vim.g.NERDTreeShowBookmarks = 1
     end
+  },
+
+  -- 自动配对括号
+  {
+    'jiangmiao/auto-pairs',
+    config = function()
+      -- Alt+n 跳过右括号/引号
+      vim.g.AutoPairsShortcutJump = '<M-n>'
+    end
   }
 }
