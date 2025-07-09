@@ -66,11 +66,30 @@ local table_mode = {
   end
 }
 
+-- Markdown 预览插件
+local markdown_preview = {
+  'iamcco/markdown-preview.nvim',
+  build = 'cd app && npm install',
+  ft = 'markdown',
+  keys = {
+    { '<F5>', '<cmd>MarkdownPreviewToggle<cr>', desc = '切换Markdown预览' }
+  },
+  config = function()
+    -- 设置浏览器
+    vim.g.mkdp_browser = ''
+    -- 预览页面标题
+    vim.g.mkdp_page_title = '${name}'
+    -- 只在markdown文件中启用
+    vim.g.mkdp_filetypes = {'markdown'}
+  end
+}
+
 return {
   tagbar,
   nerdtree,
   auto_pairs,
   drawit,
   vim_markdown,
-  table_mode
+  table_mode,
+  markdown_preview
 }
