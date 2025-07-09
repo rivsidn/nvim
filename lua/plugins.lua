@@ -37,5 +37,10 @@ return {
       -- Alt+n 跳过右括号/引号
       vim.g.AutoPairsShortcutJump = '<M-n>'
     end
+  },
+ 
+  -- 文本绘图工具
+  {
+    'vim-scripts/DrawIt'
   }
 }
