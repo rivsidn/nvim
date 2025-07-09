@@ -4,7 +4,8 @@ return {
   {
     'preservim/tagbar',
     keys = {
-      { '<F2>', '<cmd>TagbarToggle<cr>', desc = '切换标签栏' }
+      { '<F2>', '<cmd>TagbarToggle<cr>', desc = '切换标签栏' },
+      { '<F4>', '<cmd>TagbarForceUpdate<cr>', desc = '强制更新标签栏' }
     },
     config = function()
       -- Tagbar 配置
