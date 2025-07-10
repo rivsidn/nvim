@@ -198,6 +198,71 @@ local gutentags = {
   end
 }
 
+-- Claude Code集成
+local claudecode = {
+  'coder/claudecode.nvim',
+  dependencies = { 
+    {
+      "folke/snacks.nvim",
+      opts = {
+        -- 配置snacks使用终端颜色
+        styles = {
+          notification = {
+            wo = { 
+              wrap = true,
+              winhighlight = "Normal:Normal,NormalNC:NormalNC,WinBar:WinBar,WinBarNC:WinBarNC",
+            },
+            bo = { filetype = "snacks_notif" },
+            -- 使用终端背景
+            backdrop = false,
+          },
+          -- 所有浮动窗口使用透明背景
+          float = {
+            backdrop = false,
+            wo = {
+              winhighlight = "Normal:Normal,NormalNC:NormalNC,WinBar:WinBar,WinBarNC:WinBarNC",
+            },
+          },
+          -- Dashboard 透明背景
+          dashboard = {
+            backdrop = false,
+            wo = {
+              winhighlight = "Normal:Normal,NormalNC:NormalNC,WinBar:WinBar,WinBarNC:WinBarNC",
+            },
+          },
+        },
+      },
+      config = function(_, opts)
+        require("snacks").setup(opts)
+        -- 覆盖默认高亮组，使其使用透明背景
+        vim.api.nvim_set_hl(0, "SnacksNormal", { link = "Normal" })
+        vim.api.nvim_set_hl(0, "SnacksNormalNC", { link = "NormalNC" })
+        vim.api.nvim_set_hl(0, "SnacksDashboardNormal", { link = "Normal" })
+        vim.api.nvim_set_hl(0, "SnacksBackdrop", { bg = "NONE" })
+      end
+    }
+  },
+  config = true,
+  keys = {
+    { "<leader>a", nil, desc = "AI/Claude Code" },
+    { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+    { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+    { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+    { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+    { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+    { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+    {
+      "<leader>as",
+      "<cmd>ClaudeCodeTreeAdd<cr>",
+      desc = "Add file",
+      ft = { "NvimTree", "neo-tree", "oil" },
+    },
+    -- Diff management
+    { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+    { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+  },
+}
+
 return {
   tagbar,
   nerdtree,
@@ -206,5 +271,6 @@ return {
   vim_markdown,
   markdown_preview,
   table_mode,
-  gutentags
+  gutentags,
+  claudecode
 }
