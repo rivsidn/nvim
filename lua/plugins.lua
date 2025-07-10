@@ -84,6 +84,120 @@ local table_mode = {
   end
 }
 
+-- 自动tags和cscope管理
+local gutentags = {
+  'ludovicchabant/vim-gutentags',
+  config = function()
+    -- 设置tags缓存目录
+    vim.g.gutentags_cache_dir = vim.fn.expand("~/.cache/gutentags")
+
+    -- 项目根目录标记
+    vim.g.gutentags_project_root = {'.root', '.svn', '.git', '.hg', '.project'}
+
+    -- 启用模块（仅tags，Neovim不支持cscope）
+    vim.g.gutentags_modules = {'ctags'}
+
+    -- tags文件名
+    vim.g.gutentags_ctags_tagfile = 'tags'
+
+    -- 排除不需要生成tags的文件和目录
+    vim.g.gutentags_ctags_exclude = {
+      '*.git', '*.svg', '*.hg',
+      '*/tests/*',
+      'build',
+      'dist',
+      'sites/*/files/*',
+      'bin',
+      'node_modules',
+      'bower_components',
+      'cache',
+      'compiled',
+      'docs',
+      'example',
+      'bundle',
+      'vendor',
+      '*.md',
+      '*-lock.json',
+      '*.lock',
+      '*bundle*.js',
+      '*build*.js',
+      '.*rc*',
+      '*.json',
+      '*.min.*',
+      '*.map',
+      '*.bak',
+      '*.zip',
+      '*.pyc',
+      '*.class',
+      '*.o',
+      '*.o.*',
+      '*.a',
+      '*.s',
+      '*.ko',
+      '*.so',
+      '*.so.dbg',
+      '*.mod.c',
+      '*.i',
+      '*.lst',
+      '*.symtypes',
+      '*.order',
+      '*.elf',
+      '*.bin',
+      '*.gcno',
+      '*.ll',
+      '*.dwo',
+      '*.su',
+      'modules.builtin',
+      'Module.symvers',
+      '*.sln',
+      '*.tmp',
+      '*.cache',
+      '*.pdb',
+      'tags*',
+      'TAGS',
+      'cscope.*',
+      'ncscope.*',
+      'GPATH',
+      'GRTAGS',
+      'GSYMS',
+      'GTAGS',
+      'ID',
+      '*.orig',
+      '*.css',
+      '*.less',
+      '*.scss',
+      '*.exe', '*.dll',
+      '*.swp', '*.swo',
+      '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      '*.lzma', '*.lz4', '*.lzo', '*.bz2',
+      '*.patch',
+      '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      '*.kdev4',
+    }
+
+    -- 在状态栏文件名后添加gutentags状态
+    local current_statusline = vim.o.statusline
+    if current_statusline == "" then
+      -- 如果没有自定义状态栏，使用默认格式并在文件名后添加[ctags]状态
+      vim.opt.statusline = "%<%f%{gutentags#statusline() != '' ? '[ctags]' : ''} %h%m%r%=%-14.(%l,%c%V%) %P"
+    else
+      -- 如果已有自定义状态栏，智能插入[ctags]到文件名后
+      local modified_statusline = current_statusline
+      -- 查找文件名模式并在其后插入gutentags状态
+      if string.find(current_statusline, "%%f") then
+        modified_statusline = string.gsub(current_statusline, "(%%<?f)", "%1%%{gutentags#statusline() != '' ? '[ctags]' : ''}")
+      elseif string.find(current_statusline, "%%t") then
+        modified_statusline = string.gsub(current_statusline, "(%%t)", "%1%%{gutentags#statusline() != '' ? '[ctags]' : ''}")
+      else
+        -- 如果找不到文件名模式，追加到末尾
+        modified_statusline = current_statusline .. "%{gutentags#statusline() != '' ? ' [ctags]' : ''}"
+      end
+      vim.opt.statusline = modified_statusline
+    end
+  end
+}
+
 return {
   tagbar,
   nerdtree,
@@ -91,5 +205,6 @@ return {
   drawit,
   vim_markdown,
   markdown_preview,
-  table_mode
+  table_mode,
+  gutentags
 }
