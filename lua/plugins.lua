@@ -242,7 +242,61 @@ local claudecode = {
       end
     }
   },
-  config = true,
+  opts = {
+    -- 自动启动Claude Code服务
+    auto_start = true,
+    
+    -- 终端配置
+    terminal = {
+      split_side = "right",
+      split_width_percentage = 0.30,
+      provider = "auto",
+      auto_close = true,
+    },
+    
+    -- Diff集成配置 - 关键设置
+    diff_opts = {
+      auto_close_on_accept = true,    -- 接受后自动关闭diff
+      vertical_split = true,          -- 垂直分割显示
+      open_in_current_tab = true,     -- 在当前标签页打开
+    },
+    
+    -- 选择跟踪
+    track_selection = true,
+    visual_demotion_delay_ms = 50,
+    
+    -- 日志级别
+    log_level = "info",
+  },
+  config = function(_, opts)
+    require("claudecode").setup(opts)
+    
+    -- 设置Neovim自动重载外部修改的文件
+    vim.opt.autoread = true          -- 启用自动读取
+    vim.opt.updatetime = 100         -- 快速检测文件变化
+    
+    -- 设置自动命令来检测文件变化
+    vim.api.nvim_create_autocmd({"FocusGained", "BufEnter", "CursorHold", "CursorHoldI"}, {
+      pattern = "*",
+      callback = function()
+        if vim.fn.mode() ~= 'c' then
+          vim.cmd('checktime')
+        end
+      end,
+    })
+    
+    -- Claude Code diff接受后强制重载所有缓冲区
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "ClaudeCodeDiffAccepted",
+      callback = function()
+        -- 延迟执行以确保文件已写入磁盘
+        vim.defer_fn(function()
+          vim.cmd('checktime')  -- 检查所有缓冲区
+          vim.cmd('bufdo! edit') -- 强制重载所有缓冲区
+        end, 100)
+      end,
+    })
+  end,
   keys = {
     { "<leader>a", nil, desc = "AI/Claude Code" },
     { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
