@@ -26,4 +26,5 @@ require("lazy").setup("plugins")
 
 -- 键位映射
 vim.keymap.set('i', 'jk', '<ESC>', {desc = '退出插入模式'})
+vim.keymap.set('t', 'jk', '<C-\\><C-n>', {desc = '退出终端模式'})
 
