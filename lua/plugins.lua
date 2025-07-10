@@ -17,16 +17,53 @@ local tagbar = {
   end
 }
 
--- NERDTree 文件浏览器
-local nerdtree = {
-  'preservim/nerdtree',
+-- NvimTree 文件浏览器
+local nvimtree = {
+  'nvim-tree/nvim-tree.lua',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons', -- 文件图标
+  },
   keys = {
-    { '<F9>', '<cmd>NERDTreeToggle<cr>', desc = '切换文件浏览器' }
+    { '<F9>', '<cmd>NvimTreeToggle<cr>', desc = '切换文件浏览器' }
   },
   config = function()
-    -- NERDTree 配置
-    vim.g.NERDTreeWinPos = 'right'
-    vim.g.NERDTreeShowBookmarks = 1
+    -- 必须先禁用netrw
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+
+    require('nvim-tree').setup({
+      view = {
+        side = 'right',
+        width = 30,
+      },
+      filters = {
+        dotfiles = false,
+      },
+      git = {
+        enable = true,
+        ignore = false,
+      },
+      renderer = {
+        highlight_git = true,
+        icons = {
+          show = {
+            git = false,        -- 禁用git图标
+            file = false,       -- 禁用文件图标
+            folder = false,     -- 禁用文件夹图标
+            folder_arrow = true, -- 保留文件夹箭头
+          },
+          glyphs = {
+            folder = {
+              arrow_closed = "+",  -- 使用+号表示可展开
+              arrow_open = "-",    -- 使用-号表示可收起
+            },
+          },
+        },
+        indent_markers = {
+          enable = false,       -- 禁用缩进标记
+        },
+      },
+    })
   end
 }
 
@@ -319,7 +356,7 @@ local claudecode = {
 
 return {
   tagbar,
-  nerdtree,
+  nvimtree,
   auto_pairs,
   drawit,
   vim_markdown,
