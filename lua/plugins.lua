@@ -235,6 +235,29 @@ local gutentags = {
   end
 }
 
+-- Cscope集成
+local cscope_maps = {
+  'dhananjaylatkar/cscope_maps.nvim',
+  dependencies = {
+    "folke/trouble.nvim", -- 可选，用于显示搜索结果
+    "nvim-telescope/telescope.nvim", -- 可选，用于更好的搜索体验
+  },
+  config = function()
+    require("cscope_maps").setup({
+      disable_maps = false,
+      skip_input_prompt = false,
+      cscope = {
+        db_file = "./cscope.out",
+        exec = "gtags-cscope",
+        picker = "quickfix", -- 可选: "quickfix", "telescope", "trouble"
+        skip_input_prompt = false,
+        db_build_cmd = { scripts = "cscope -Rbkq" },
+        statusline_indicator = nil,
+      }
+    })
+  end
+}
+
 -- Claude Code集成
 local claudecode = {
   'coder/claudecode.nvim',
@@ -363,5 +386,6 @@ return {
   markdown_preview,
   table_mode,
   gutentags,
+  cscope_maps,
   claudecode
 }
