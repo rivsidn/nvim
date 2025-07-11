@@ -7,6 +7,8 @@ vim.opt.wrapscan = false           -- 不循环搜索
 vim.opt.smartindent = true         -- 智能缩进
 vim.opt.splitbelow = true          -- 水平分割窗口在下方
 
+vim.o.mouse = ""
+
 -- 安装 lazy.nvim 插件管理器
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
