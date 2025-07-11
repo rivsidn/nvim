@@ -34,3 +34,6 @@ require("lazy").setup("plugins")
 vim.keymap.set('i', 'jk', '<ESC>', {desc = '退出插入模式'})
 vim.keymap.set('t', 'jk', '<C-\\><C-n>', {desc = '退出终端模式'})
 
+-- 禁用 Ctrl+@ (Ctrl+Space 被终端转换为 Ctrl+@)
+vim.keymap.set('i', '<C-@>', '<Nop>', {desc = '禁用Ctrl+@重复插入'})
+
