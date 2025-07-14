@@ -10,7 +10,7 @@ local tagbar = {
   config = function()
     -- Tagbar 配置
     vim.g.tagbar_width = 30
-    vim.g.tagbar_autofocus = 1
+    vim.g.tagbar_autofocus = 0
     vim.g.tagbar_sort = 0
     -- 在左侧显示
     vim.g.tagbar_position = 'topleft vertical'
