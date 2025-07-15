@@ -73,6 +73,50 @@ local auto_pairs = {
   config = function()
     -- Alt+n 跳过右括号/引号
     vim.g.AutoPairsShortcutJump = '<M-n>'
+
+    -- 修复跳转功能，支持反引号等所有配对符号
+    vim.cmd([[
+      function! AutoPairsJump()
+        " 获取当前行和位置信息
+        let current_line = getline('.')
+        let col = col('.') - 1
+        let char_under = current_line[col]
+        let char_next = current_line[col + 1]
+
+        " 动态获取所有配对符号
+        let pairs = get(b:, 'AutoPairs', g:AutoPairs)
+
+        " 如果光标下是闭合符号，直接跳过
+        for [open, close] in items(pairs)
+          if char_under == close && close != ''
+            normal! l
+            return
+          endif
+        endfor
+
+        " 如果光标后面是闭合符号，跳过
+        for [open, close] in items(pairs)
+          if char_next == close && close != ''
+            normal! l
+            return
+          endif
+        endfor
+
+        " 否则搜索下一个闭合符号
+        let close_chars = []
+        for [open, close] in items(pairs)
+          if close != '' && close != open
+            let escaped = escape(close, '[]\\^$.*~')
+            call add(close_chars, escaped)
+          endif
+        endfor
+
+        if len(close_chars) > 0
+          let pattern = '[' . join(close_chars, '') . ']'
+          call search(pattern, 'W')
+        endif
+      endfunction
+    ]])
   end
 }
 
@@ -261,14 +305,14 @@ local cscope_maps = {
 -- Claude Code集成
 local claudecode = {
   'coder/claudecode.nvim',
-  dependencies = { 
+  dependencies = {
     {
       "folke/snacks.nvim",
       opts = {
         -- 配置snacks使用终端颜色
         styles = {
           notification = {
-            wo = { 
+            wo = {
               wrap = true,
               winhighlight = "Normal:Normal,NormalNC:NormalNC,WinBar:WinBar,WinBarNC:WinBarNC",
             },
@@ -305,7 +349,7 @@ local claudecode = {
   opts = {
     -- 自动启动Claude Code服务
     auto_start = true,
-    
+
     -- 终端配置
     terminal = {
       split_side = "right",
@@ -313,28 +357,28 @@ local claudecode = {
       provider = "auto",
       auto_close = true,
     },
-    
+
     -- Diff集成配置 - 关键设置
     diff_opts = {
       auto_close_on_accept = true,    -- 接受后自动关闭diff
       vertical_split = true,          -- 垂直分割显示
       open_in_current_tab = true,     -- 在当前标签页打开
     },
-    
+
     -- 选择跟踪
     track_selection = true,
     visual_demotion_delay_ms = 50,
-    
+
     -- 日志级别
     log_level = "info",
   },
   config = function(_, opts)
     require("claudecode").setup(opts)
-    
+
     -- 设置Neovim自动重载外部修改的文件
     vim.opt.autoread = true          -- 启用自动读取
     vim.opt.updatetime = 100         -- 快速检测文件变化
-    
+
     -- 设置自动命令来检测文件变化
     vim.api.nvim_create_autocmd({"FocusGained", "BufEnter", "CursorHold", "CursorHoldI"}, {
       pattern = "*",
@@ -344,7 +388,7 @@ local claudecode = {
         end
       end,
     })
-    
+
     -- Claude Code diff接受后强制重载所有缓冲区
     vim.api.nvim_create_autocmd("User", {
       pattern = "ClaudeCodeDiffAccepted",
