@@ -430,6 +430,6 @@ return {
   markdown_preview,
   table_mode,
   gutentags,
-  cscope_maps,
+--  cscope_maps,
   claudecode
 }
