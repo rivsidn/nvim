@@ -421,6 +421,34 @@ local claudecode = {
   },
 }
 
+local luaSnip = {
+	"L3MON4D3/LuaSnip",
+	version = "v2.4.0",
+	build = "make install_jsregexp",
+	dependencies = {
+		"rafamadriz/friendly-snippets", -- 提供VSCode风格的代码片段
+	},
+	config = function()
+		local ls = require("luasnip")
+
+		-- 键位映射配置
+		vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true, desc = "展开代码片段"})
+		vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump(1) end, {silent = true, desc = "跳转到下一个占位符"})
+		vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true, desc = "跳转到上一个占位符"})
+		vim.keymap.set({"i", "s"}, "<C-E>", function()
+			if ls.choice_active() then
+				ls.change_choice(1)
+			end
+		end, {silent = true, desc = "切换选择项"})
+
+		-- 加载friendly-snippets提供的VSCode风格代码片段
+		require("luasnip.loaders.from_vscode").lazy_load()
+
+		-- 加载自定义代码片段（如果存在）
+		require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/snippets"})
+	end
+}
+
 return {
   tagbar,
   nvimtree,
@@ -431,5 +459,6 @@ return {
   table_mode,
   gutentags,
 --  cscope_maps,
-  claudecode
+  claudecode,
+  luaSnip
 }
