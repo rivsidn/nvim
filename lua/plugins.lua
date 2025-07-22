@@ -432,7 +432,7 @@ local luaSnip = {
 		local ls = require("luasnip")
 
 		-- 键位映射配置
-		vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true, desc = "展开代码片段"})
+		vim.keymap.set({"i"}, "<C-k>", function() ls.expand() end, {silent = true, desc = "展开代码片段"})
 		vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump(1) end, {silent = true, desc = "跳转到下一个占位符"})
 		vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true, desc = "跳转到上一个占位符"})
 		vim.keymap.set({"i", "s"}, "<C-E>", function()
