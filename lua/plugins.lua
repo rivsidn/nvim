@@ -314,6 +314,20 @@ local gutentags = {
   end
 }
 
+-- keymap-terminal插件
+local keymap_terminal = {
+  'rivsidn/keymap-terminal.nvim',
+  config = function()
+    require('keymap-terminal').setup({
+      terminal = {
+        auto_insert = true,
+        split_direction = 'current',
+        name_prefix = 'terminal-',
+      }
+    })
+  end
+}
+
 local luaSnip = {
 	"L3MON4D3/LuaSnip",
 	version = "v2.4.0",
@@ -455,6 +469,7 @@ return {
 --  cscope_maps,
   drawit,
   gutentags,
+  keymap_terminal,
   luaSnip,
   nvimtree,
   markdown_preview,
