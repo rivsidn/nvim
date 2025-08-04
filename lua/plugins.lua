@@ -328,6 +328,15 @@ local keymap_terminal = {
   end
 }
 
+-- LSP基础配置
+local lsp_config = {
+  'neovim/nvim-lspconfig',
+  config = function()
+    -- 配置clangd用于C/C++
+    require('lspconfig').clangd.setup{}
+  end
+}
+
 local luaSnip = {
 	"L3MON4D3/LuaSnip",
 	version = "v2.4.0",
@@ -470,6 +479,7 @@ return {
   drawit,
   gutentags,
   keymap_terminal,
+--  lsp_config,
   luaSnip,
   nvimtree,
   markdown_preview,
