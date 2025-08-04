@@ -175,21 +175,22 @@ local claudecode = {
 -- Cscope集成
 local cscope_maps = {
   'dhananjaylatkar/cscope_maps.nvim',
-  dependencies = {
-    "folke/trouble.nvim", -- 可选，用于显示搜索结果
-    "nvim-telescope/telescope.nvim", -- 可选，用于更好的搜索体验
-  },
   config = function()
     require("cscope_maps").setup({
       disable_maps = false,
       skip_input_prompt = false,
       cscope = {
-        db_file = "./cscope.out",
-        exec = "gtags-cscope",
-        picker = "quickfix", -- 可选: "quickfix", "telescope", "trouble"
+        db_file = "cscope.out",
+        exec = "cscope",
+        picker = "quickfix",
         skip_input_prompt = false,
-        db_build_cmd = { scripts = "cscope -Rbkq" },
+        db_build_cmd = { args = { "-bqkv" } },
         statusline_indicator = nil,
+        -- 启用项目根目录查找功能
+        project_rooter = {
+          enable = true,
+          change_cwd = false,
+        }
       }
     })
   end
@@ -475,7 +476,7 @@ local vim_markdown = {
 return {
   auto_pairs,
   claudecode,
---  cscope_maps,
+  cscope_maps,
   drawit,
   gutentags,
   keymap_terminal,
