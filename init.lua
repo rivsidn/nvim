@@ -10,7 +10,7 @@ vim.opt.splitbelow = true          -- 水平分割窗口在下方
 vim.o.mouse = ""
 
 -- 修改nvim配色
-vim.cmd[[colorscheme vim]]
+vim.cmd.colorscheme('vim')
 vim.o.termguicolors = false
 
 -- 安装 lazy.nvim 插件管理器
