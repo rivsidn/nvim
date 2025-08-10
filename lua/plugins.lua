@@ -349,9 +349,26 @@ local luaSnip = {
 		local ls = require("luasnip")
 
 		-- 键位映射配置
-		vim.keymap.set({"i"}, "<C-P>", function() ls.expand() end, {silent = true, desc = "展开代码片段"})
+		-- Tab 展开或跳转
+		vim.keymap.set({"i", "s"}, "<Tab>", function()
+			if ls.expand_or_jumpable() then
+				ls.expand_or_jump()
+			else
+				-- 保留原始 Tab 功能（缩进）
+				return "<Tab>"
+			end
+		end, {silent = true, expr = true, desc = "展开片段或跳转"})
+		
+		-- Shift+Tab 向后跳转
+		vim.keymap.set({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true, desc = "跳转到上一个占位符"})
+		
+		-- Ctrl+L 向前跳转（可选，作为 Tab 的备用）
 		vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump(1) end, {silent = true, desc = "跳转到下一个占位符"})
+		
+		-- Ctrl+H 向后跳转（可选，作为 S-Tab 的备用）
 		vim.keymap.set({"i", "s"}, "<C-H>", function() ls.jump(-1) end, {silent = true, desc = "跳转到上一个占位符"})
+		
+		-- Alt+n 切换选项（循环切换）
 		vim.keymap.set({"i", "s"}, "<M-n>", function()
 			if ls.choice_active() then
 				ls.change_choice(1)
