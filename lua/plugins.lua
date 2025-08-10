@@ -5,7 +5,7 @@ local auto_pairs = {
   'jiangmiao/auto-pairs',
   config = function()
     -- Alt+n 跳过右括号/引号
-    vim.g.AutoPairsShortcutJump = '<M-n>'
+    vim.g.AutoPairsShortcutJump = '<C-E>'
 
     -- 修复跳转功能，支持反引号等所有配对符号
     vim.cmd([[
@@ -352,7 +352,7 @@ local luaSnip = {
 		vim.keymap.set({"i"}, "<C-P>", function() ls.expand() end, {silent = true, desc = "展开代码片段"})
 		vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump(1) end, {silent = true, desc = "跳转到下一个占位符"})
 		vim.keymap.set({"i", "s"}, "<C-H>", function() ls.jump(-1) end, {silent = true, desc = "跳转到上一个占位符"})
-		vim.keymap.set({"i", "s"}, "<C-E>", function()
+		vim.keymap.set({"i", "s"}, "<M-n>", function()
 			if ls.choice_active() then
 				ls.change_choice(1)
 			end
