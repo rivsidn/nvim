@@ -190,8 +190,23 @@ local cscope_maps = {
         project_rooter = {
           enable = true,
           change_cwd = false,
-        }
+        },
+        -- 设置quickfix窗口打开后的高度
+        qf_window_size = 8,  -- 设置quickfix窗口高度为25行
       }
+    })
+    
+    -- cscope打开quickfix后自动调整高度
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "qf",
+      callback = function()
+        -- 检查是否是cscope触发的quickfix
+        local qf_title = vim.fn.getqflist({title = 1}).title
+        if qf_title and qf_title:match("cscope") then
+          vim.cmd('resize 8')  -- 设置为25行高
+        end
+      end,
+      desc = "自动调整cscope的quickfix窗口高度"
     })
   end
 }
