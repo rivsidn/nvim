@@ -37,3 +37,6 @@ vim.keymap.set('t', 'jk', '<C-\\><C-n>', {desc = '退出terminal模式'})
 -- 禁用 Ctrl+@ (Ctrl+Space 被终端转换为 Ctrl+@)
 vim.keymap.set('i', '<C-@>', '<Nop>', {desc = '禁用Ctrl+@重复插入'})
 
+-- 加载 Claude 布局模块
+require('claude-layout').setup()
+
