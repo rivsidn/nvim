@@ -28,8 +28,8 @@ local function create_markdown_file_under_cursor()
   -- 创建文件所在的目录
   local dir = vim.fn.fnamemodify(filepath, ':h')
   if vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir, 'p')
-    vim.notify('创建目录: ' .. dir, vim.log.levels.INFO)
+--  vim.fn.mkdir(dir, 'p')
+    vim.notify('目录不存在: ' .. dir, vim.log.levels.INFO)
   end
   
   -- 检查文件是否已存在
