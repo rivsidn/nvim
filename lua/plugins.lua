@@ -502,6 +502,12 @@ local tagbar = {
     vim.g.tagbar_sort = 0
     -- 在左侧显示
     vim.g.tagbar_position = 'topleft vertical'
+    -- 禁止自动高亮跟踪当前标签
+--    vim.g.tagbar_autoshowtag = 0
+    -- 禁止自动跳转到当前标签
+    vim.g.tagbar_autopreview = 0
+    -- 禁止自动更新（这会禁止光标跟随）
+    vim.g.tagbar_updateonsave_only = 1
   end
 }
 
