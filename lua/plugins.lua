@@ -190,6 +190,10 @@ local cscope_maps = {
       disable_maps = false,
       skip_input_prompt = false,
       cscope = {
+        -- 禁用 Ctrl+] 的 Cstag 映射
+        tag = {
+          keymap = false,
+        },
         db_file = "cscope.out",
         exec = "cscope",
         picker = "quickfix",
