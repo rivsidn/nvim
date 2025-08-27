@@ -1,4 +1,5 @@
 vim.opt.number = true              -- 显示行号
+vim.opt.cursorline = true          -- 显示当前行下划线
 vim.opt.ignorecase = true          -- 忽略大小写
 vim.opt.smartcase = true           -- 智能大小写匹配
 vim.opt.hlsearch = true            -- 高亮搜索
@@ -38,13 +39,13 @@ vim.keymap.set('t', 'jk', '<C-\\><C-n>', {desc = '退出terminal模式'})
 vim.keymap.set('i', '<C-@>', '<Nop>', {desc = '禁用Ctrl+@重复插入'})
 
 -- 自动进入terminal 模式
-vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
-  callback = function()
-    if vim.bo.buftype == "terminal" then
-      vim.cmd("startinsert")
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
+--   callback = function()
+--     if vim.bo.buftype == "terminal" then
+--       vim.cmd("startinsert")
+--     end
+--   end,
+-- })
 
 -- 加载 Claude 布局模块
 require('claude-layout').setup()

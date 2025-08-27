@@ -525,12 +525,49 @@ local vim_markdown = {
   end
 }
 
+-- Graphviz DOT 文件支持
+local vim_graphviz = {
+  'liuchengxu/graphviz.vim',
+  ft = {'dot', 'gv'},  -- 仅在 .dot 和 .gv 文件中加载
+  config = function()
+    -- 设置输出格式为 png
+    vim.g.graphviz_output_format = 'png'
+    -- 设置预览程序为 sxiv
+    vim.g.graphviz_viewer = 'sxiv'
+
+    -- 创建交互模式开关变量
+    vim.g.graphviz_interactive_mode = false
+
+    -- 创建切换交互模式的命令
+    vim.api.nvim_create_user_command('GraphvizInteractive', function()
+      vim.g.graphviz_interactive_mode = not vim.g.graphviz_interactive_mode
+      if vim.g.graphviz_interactive_mode then
+        print("Graphviz 交互模式已开启 - 保存时自动编译")
+      else
+        print("Graphviz 交互模式已关闭")
+      end
+    end, {})
+
+    -- 保存时自动编译（仅在交互模式开启时）
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      pattern = {"*.dot", "*.gv"},
+      callback = function()
+        if vim.g.graphviz_interactive_mode then
+          vim.cmd('silent! GraphvizCompile')
+          print("Graphviz 编译完成")
+        end
+      end,
+      desc = "Graphviz 文件保存时自动编译"
+    })
+  end
+}
+
 return {
   auto_pairs,
   claudecode,
   cscope_maps,
   drawit,
-  gutentags,
+--  gutentags,
   keymap_terminal,
 --  lsp_config,
   luaSnip,
@@ -538,5 +575,6 @@ return {
   markdown_preview,
   table_mode,
   tagbar,
-  vim_markdown
+  vim_markdown,
+  vim_graphviz
 }
