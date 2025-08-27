@@ -533,10 +533,10 @@ local vim_graphviz = {
     -- 设置输出格式为 png
     vim.g.graphviz_output_format = 'png'
     -- 设置预览程序为 sxiv
-    vim.g.graphviz_viewer = 'sxiv'
+    -- vim.g.graphviz_viewer = 'sxiv'
 
     -- 创建交互模式开关变量
-    vim.g.graphviz_interactive_mode = false
+    vim.g.graphviz_interactive_mode = true
 
     -- 创建切换交互模式的命令
     vim.api.nvim_create_user_command('GraphvizInteractive', function()
@@ -554,11 +554,19 @@ local vim_graphviz = {
       callback = function()
         if vim.g.graphviz_interactive_mode then
           vim.cmd('silent! GraphvizCompile')
-          print("Graphviz 编译完成")
         end
       end,
       desc = "Graphviz 文件保存时自动编译"
     })
+
+    -- 创建后台查看命令
+    vim.api.nvim_create_user_command('GraphvizView', function()
+      local file = vim.fn.expand('%:p:r') .. '.' .. vim.g.graphviz_output_format
+      if vim.fn.filereadable(file) == 1 then
+        -- 使用 jobstart 在后台运行 sxiv
+        vim.fn.jobstart({'sxiv', '-Z', file}, {detach = true})
+      end
+    end, {})
   end
 }
 
