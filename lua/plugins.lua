@@ -525,6 +525,28 @@ local vim_markdown = {
   end
 }
 
+-- Vim Fugitive - Git集成工具
+local vim_fugitive = {
+  'tpope/vim-fugitive',
+  cmd = {
+    'Git'
+  },
+  keys = {
+    -- Git status
+    { '<leader>gs', '<cmd>Git<cr>', desc = 'Git status' },
+    -- Git blame
+    { '<leader>gb', '<cmd>Git blame<cr>', desc = 'Git blame' },
+    -- Git diff
+    { '<leader>gd', '<cmd>Gdiffsplit<cr>', desc = 'Git diff' },
+    -- Git log
+    { '<leader>gl', '<cmd>Gclog<cr>', desc = 'Git log (当前文件)' },
+    { '<leader>gL', '<cmd>Git log<cr>', desc = 'Git log (全部)' },
+    -- Git read/write
+    { '<leader>gr', '<cmd>Gread<cr>', desc = 'Git checkout (恢复文件)' },
+    { '<leader>gw', '<cmd>Gwrite<cr>', desc = 'Git add (暂存文件)' },
+  }
+}
+
 -- Graphviz DOT 文件支持
 local vim_graphviz = {
   'liuchengxu/graphviz.vim',
@@ -584,5 +606,6 @@ return {
   table_mode,
   tagbar,
   vim_markdown,
+  vim_fugitive,
   vim_graphviz
 }
