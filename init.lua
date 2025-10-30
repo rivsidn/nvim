@@ -11,6 +11,8 @@ vim.opt.splitbelow = true          -- 水平分割窗口在下方
 vim.o.mouse = ""
 
 -- 修改nvim配色
+-- 如果此处报错，删除掉apt 安装的neovim
+-- 执行snap install nvim 命令安装
 vim.cmd.colorscheme('vim')
 vim.o.termguicolors = false
 
