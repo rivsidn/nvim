@@ -49,5 +49,3 @@ vim.keymap.set('i', '<C-@>', '<Nop>', {desc = '禁用Ctrl+@重复插入'})
 --   end,
 -- })
 
--- 加载 Claude 布局模块
-require('claude-layout').setup()
