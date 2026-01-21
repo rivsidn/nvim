@@ -106,6 +106,7 @@ local claudecode = {
       split_side = "right",
       split_width_percentage = 0.30,
       provider = "auto",
+      auto_insert = false,
       auto_close = true,
     },
 
