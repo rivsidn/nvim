@@ -359,6 +359,27 @@ local keymap_terminal = {
   end
 }
 
+-- 在 Neovim split 和 tmux pane 之间使用 Alt+hjkl 无缝切换
+local vim_tmux_navigator = {
+  "christoomey/vim-tmux-navigator",
+  cmd = {
+    "TmuxNavigateLeft",
+    "TmuxNavigateDown",
+    "TmuxNavigateUp",
+    "TmuxNavigateRight",
+    "TmuxNavigatorProcessList",
+  },
+  init = function()
+    vim.g.tmux_navigator_no_mappings = 1
+  end,
+  keys = {
+    { "<A-h>", "<cmd><C-U>TmuxNavigateLeft<cr>", desc = "切换到左侧窗口" },
+    { "<A-j>", "<cmd><C-U>TmuxNavigateDown<cr>", desc = "切换到下方窗口" },
+    { "<A-k>", "<cmd><C-U>TmuxNavigateUp<cr>", desc = "切换到上方窗口" },
+    { "<A-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "切换到右侧窗口" },
+  },
+}
+
 -- LSP基础配置
 local lsp_config = {
   'neovim/nvim-lspconfig',
@@ -600,6 +621,7 @@ return {
   drawit,
 --  gutentags,
   keymap_terminal,
+  vim_tmux_navigator,
 --  lsp_config,
   luaSnip,
   nvimtree,
