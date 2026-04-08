@@ -373,10 +373,10 @@ local vim_tmux_navigator = {
     vim.g.tmux_navigator_no_mappings = 1
   end,
   keys = {
-    { "<A-h>", "<cmd><C-U>TmuxNavigateLeft<cr>", desc = "切换到左侧窗口" },
-    { "<A-j>", "<cmd><C-U>TmuxNavigateDown<cr>", desc = "切换到下方窗口" },
-    { "<A-k>", "<cmd><C-U>TmuxNavigateUp<cr>", desc = "切换到上方窗口" },
-    { "<A-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "切换到右侧窗口" },
+    { "<A-h>", "<cmd>TmuxNavigateLeft<cr>", desc = "切换到左侧窗口" },
+    { "<A-j>", "<cmd>TmuxNavigateDown<cr>", desc = "切换到下方窗口" },
+    { "<A-k>", "<cmd>TmuxNavigateUp<cr>", desc = "切换到上方窗口" },
+    { "<A-l>", "<cmd>TmuxNavigateRight<cr>", desc = "切换到右侧窗口" },
   },
 }
 
